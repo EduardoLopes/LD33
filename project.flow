@@ -1,0 +1,37 @@
+{
+
+  luxe:{
+    window: {
+      width:320,
+      height:240,
+      title:'LD33',
+      fullscreen:false,
+      resizable:true,
+      borderless:false
+    }
+  },
+
+  project : {
+    name : 'LD33',
+    version : '0.0.0',
+    author : 'Eduardo Lopes',
+
+    app : {
+      name : 'LD33',
+      package : 'com.square64.empty'
+    },
+
+    build : {
+      dependencies : {
+        luxe : '*',
+        nape : '*'
+      }
+    },
+
+    files : {
+      assets : 'assets/'
+    }
+
+  }
+
+}
