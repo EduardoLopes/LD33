@@ -6,6 +6,7 @@ import luxe.Vector;
 import luxe.Color;
 import luxe.Sprite;
 import luxe.Input;
+import luxe.Entity;
 import luxe.tilemaps.Tilemap;
 import luxe.importers.tiled.TiledMap;
 
@@ -18,15 +19,18 @@ import nape.shape.Polygon;
 import luxe.physics.nape.DebugDraw;
 #end
 
+import objects.Player;
+
 class Game extends State {
 
+    #if !no_debug_console
+    public static var drawer : DebugDraw;
+    #end
     var tilemap : TiledMap;
     var tilemapBody : Body;
     var tilemapType : CbType;
     var scale : Int = 1;
-    #if !no_debug_console
-    public static var drawer : DebugDraw;
-    #end
+    var entities:Array<Entity>;
 
     public function new() {
 
@@ -44,6 +48,8 @@ class Game extends State {
             });
             Luxe.physics.nape.debugdraw = drawer;
         #end
+
+        entities = [];
 
         tilemapType = new CbType();
         tilemapBody = new Body(BodyType.STATIC);
@@ -63,14 +69,24 @@ class Game extends State {
             bound.y *= tilemap.tile_height * scale;
             bound.w *= tilemap.tile_width * scale;
             bound.h *= tilemap.tile_height * scale;
-            tilemapBody.shapes.add(
-                new Polygon(
-                    Polygon.rect(bound.x, bound.y, bound.w, bound.h)
-                )
-            );
+            var shape = new Polygon( Polygon.rect(bound.x, bound.y, bound.w, bound.h) );
+            /*shape.filter.collisionGroup = 3;
+            shape.filter.collisionMask = (1|2);*/
+            tilemapBody.shapes.add( shape );
         }
 
         tilemapBody.space = Luxe.physics.nape.space;
+
+        for(objectsLayer in tilemap.tiledmap_data.object_groups){
+            for(object in objectsLayer.objects){
+
+                entities.push(
+                    Type.createInstance( Type.resolveClass( 'objects.'+object.type ), [object])
+                );
+
+            }
+        }
+
 
         #if !no_debug_console
             Game.drawer.add(tilemapBody);

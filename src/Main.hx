@@ -7,6 +7,8 @@ import luxe.Color;
 import phoenix.Texture;
 import phoenix.Camera;
 
+import nape.geom.Vec2;
+
 import states.Game;
 
 class Main extends luxe.Game {
@@ -28,8 +30,14 @@ class Main extends luxe.Game {
             texts:[
                 { id: 'assets/map-0.tmx' }
             ],
+            jsons:[
+                { id: 'assets/jsons/player_animation.json'},
+                { id: 'assets/jsons/heart_animation.json'}
+            ],
             textures : [
-                { id:'assets/tiles.png'}
+                { id:'assets/tiles.png'},
+                { id:'assets/images/player.png'},
+                { id:'assets/images/heart.png'}
             ]
         });
 
@@ -48,6 +56,8 @@ class Main extends luxe.Game {
     } //ready
 
     function onLoaded(_){
+
+        Luxe.physics.nape.space.gravity = new Vec2(0, 0);
 
         state.add( new Game() );
 

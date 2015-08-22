@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="16" tileheight="16" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="16" tileheight="16" nextobjectid="2">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="400">
   <image source="tiles.png" width="320" height="320"/>
  </tileset>
  <layer name="Tile Layer 1" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJyNk80RhCAMRrOLLfhz5GoRztDCdkAplGIplJJS9sMQjQ7jcHhDIHkgUSei/CFKLRwRDRXXyE9EEaP/Ij82mMFSQZxsDs4Ol4uPedyw9sNaD5vsdfOxTitiwCCZMdTxjFGbX3x1vXF03xKH4uM+uxM8Yl/9VGutQ3WufqnN6Mk+CHG5zmfjs7mDzfX4ycCGXl+fNa2Nntb7sxPifPnhcbbtu/bkrf/hcZ6erxzP0PI3eS+xB9Sy9fEtxlH2PMGdwiJ9Opgf+a/8NzzJPuEJ+hLQ26w4qb/VwKU/OQuAWw==
+   eJyNU8kRwyAMVEJaiO0nX+MaMuMW0gGlqBRKcSmUkgVJMfaQ47GDhLSrA3sg2i5E3IMjopvCdeIDUcTpr4jfOxiBSQGb2xg4Cdxc+PDjA3dP3P2Dh2gd+LinGTaQFqCcAf5y9HmROluPHzQX8GHnEHwOol31Ch/zJCfwsL3WLxwyjbnRaLQqHztJN0Gc+vV903+x2XS+8FnrpHmvn7WXolFrfOKXXMsxvvZU+7Cd6PzZCeKo/EW4XvPtLdjudAb+sv8ST2GfhY3T2N33wzexPkXnJ5CbWz6+xXgXzTcw0zrJnirGU/wq/00eRGc9A3tZsdvN4CT/kAMuvQAtvH0K
   </data>
  </layer>
  <layer name="collision" width="16" height="14" visible="0">
@@ -13,4 +13,7 @@
    eJw7ycDAcHIQYFLBqP5R/dTUP1AYAJUxUak=
   </data>
  </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="1" name="player" type="Player" x="112" y="112" width="16" height="32"/>
+ </objectgroup>
 </map>
