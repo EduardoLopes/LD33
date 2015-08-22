@@ -1,12 +1,12 @@
 {
     "collide" : {
-        "frame_size":{ "x":"15", "y":"12" },
+        "frame_size":{ "x":"12", "y":"15" },
         "frameset": ["1-5"],
-        "loop": "true",
+        "loop": "false",
         "speed": "16"
     },
     "idle" : {
-        "frame_size":{ "x":"15", "y":"12" },
+        "frame_size":{ "x":"12", "y":"15" },
         "frameset": ["1"],
         "loop": "true",
         "speed": "8"

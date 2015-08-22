@@ -1,7 +1,7 @@
 {
     "idle" : {
         "frame_size":{ "x":"16", "y":"24" },
-        "frameset": ["1", "2"],
+        "frameset": ["1", "5"],
         "loop": "true",
         "speed": "16"
     },

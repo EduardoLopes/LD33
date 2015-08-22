@@ -21,16 +21,18 @@ import states.Game;
 class Heart extends Sprite {
 
     public var body : Body;
-    public static var type : CbType = new CbType();
+
     public var facing : String;
     public var anim : SpriteAnimation;
     var speed : Int = 100;
     var moving : Bool = false;
+    var type : CbType = new CbType();
+    var direction : String;
 
-    public function new (x:Float, y:Float){
+    public function new (x:Float, y:Float, Direction:String){
 
         super({
-            size: new Vector(15, 12),
+            size: new Vector(12, 15),
             pos: new Vector(x, y),
             texture: Luxe.resources.texture('assets/images/heart.png'),
             name: 'heart',
@@ -39,17 +41,37 @@ class Heart extends Sprite {
             centered: false
         });
 
+        direction = Direction;
+
+        var collidableWith = [Game.tilemapType];
+
         body = new Body(BodyType.DYNAMIC);
         body.allowRotation = false;
         body.isBullet = true;
 
-        var core = new Polygon( Polygon.rect(0, 0, 15, 12) );
+        var core = new Polygon( Polygon.rect(0, 0, 12, 15) );
         core.filter.collisionGroup = 2;
         core.filter.collisionMask = ~(1|2);
         core.cbTypes.add(type);
 
         body.shapes.add( core );
-        body.position.setxy(pos.x, pos.y);
+
+        if(direction == 'left'){
+            flipx = false;
+            body.position.setxy(pos.x, pos.y + 9);
+        }
+
+        if(direction == 'right'){
+            flipx = true;
+            body.position.setxy(pos.x - 4, pos.y + 9);
+        }
+
+        Luxe.physics.nape.space.listeners.add(new InteractionListener(
+            CbEvent.BEGIN, InteractionType.COLLISION,
+            type,
+            collidableWith,
+            bulletCollides
+        ));
 
         var anim_object = Luxe.resources.json('assets/jsons/heart_animation.json');
         anim = add( new SpriteAnimation({ name:'anim' }) );
@@ -63,14 +85,35 @@ class Heart extends Sprite {
         #end
     }
 
+    function bulletCollides(cb:InteractionCallback) {
+
+        anim.animation = 'collide';
+        anim.play();
+
+        #if !no_debug_console
+        Game.drawer.remove(body);
+        #end
+
+    }
+
     override function update(dt:Float) {
 
         super.update(dt);
 
+        if(!anim.playing && anim.animation == 'collide'){
+            body.space = null;
+            destroy();
+            visible = false;
+        }
+
         /*body.velocity.x *= 0.8;
         body.velocity.y *= 0.8;*/
+        if(direction == 'left'){
+            body.velocity.x -= 20;
+        } else if(direction == 'right'){
+            body.velocity.x += 20;
+        }
 
-        body.velocity.x -= 20;
 
         pos.x = body.position.x;
         pos.y = body.position.y;

@@ -15,7 +15,6 @@
     name : 'LD33',
     version : '0.0.0',
     author : 'Eduardo Lopes',
-
     app : {
       name : 'LD33',
       package : 'com.square64.empty'

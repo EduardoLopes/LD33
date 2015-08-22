@@ -28,6 +28,7 @@ class Player extends Sprite {
     public var anim : SpriteAnimation;
     var speed : Int = 100;
     var moving : Bool = false;
+    var shotTime : Int = 0;
 
     public function new (object:TiledObject){
 
@@ -39,6 +40,8 @@ class Player extends Sprite {
             depth: 3,
             centered: false
         });
+
+        facing = 'left';
 
         body = new Body(BodyType.DYNAMIC);
         body.allowRotation = false;
@@ -73,28 +76,33 @@ class Player extends Sprite {
         if(Luxe.input.inputdown('left')) {
             body.velocity.x = -speed;
             moving = true;
-            flipx = true;
-        }
+            if(!Luxe.input.inputdown('action')){
+                flipx = true;
+                facing = 'left';
+            }
 
-        if(Luxe.input.inputdown('right')) {
+        } else if(Luxe.input.inputdown('right')) {
             body.velocity.x = speed;
             moving = true;
+            if(!Luxe.input.inputdown('action')){
             flipx = false;
+            facing = 'right';
+            }
+
         }
 
         if(Luxe.input.inputdown('up')) {
             body.velocity.y = -speed;
             moving = true;
-        }
-
-        if(Luxe.input.inputdown('down')) {
+        } else if(Luxe.input.inputdown('down')) {
             body.velocity.y = speed;
             moving = true;
         }
 
-        if(Luxe.input.inputdown('action')) {
+        if(Luxe.input.inputdown('action') && shotTime > 20) {
 
-            new Heart(pos.x, pos.y);
+            new Heart(pos.x, pos.y, facing);
+            shotTime = 0;
 
         }
 
@@ -119,6 +127,8 @@ class Player extends Sprite {
             }
 
         }
+
+        shotTime++;
 
         body.velocity.x *= 0.8;
         body.velocity.y *= 0.8;

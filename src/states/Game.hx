@@ -28,7 +28,7 @@ class Game extends State {
     #end
     var tilemap : TiledMap;
     var tilemapBody : Body;
-    var tilemapType : CbType;
+    public static var tilemapType : CbType;
     var scale : Int = 1;
     var entities:Array<Entity>;
 
@@ -70,8 +70,8 @@ class Game extends State {
             bound.w *= tilemap.tile_width * scale;
             bound.h *= tilemap.tile_height * scale;
             var shape = new Polygon( Polygon.rect(bound.x, bound.y, bound.w, bound.h) );
-            /*shape.filter.collisionGroup = 3;
-            shape.filter.collisionMask = (1|2);*/
+            shape.filter.collisionGroup = 4;
+            //shape.filter.collisionMask = ~(1|2);
             tilemapBody.shapes.add( shape );
         }
 
