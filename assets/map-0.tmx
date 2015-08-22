@@ -8,7 +8,7 @@
    eJyNk80RhCAMRrOLLfhz5GoRztDCdkAplGIplJJS9sMQjQ7jcHhDIHkgUSei/CFKLRwRDRXXyE9EEaP/Ij82mMFSQZxsDs4Ol4uPedyw9sNaD5vsdfOxTitiwCCZMdTxjFGbX3x1vXF03xKH4uM+uxM8Yl/9VGutQ3WufqnN6Mk+CHG5zmfjs7mDzfX4ycCGXl+fNa2Nntb7sxPifPnhcbbtu/bkrf/hcZ6erxzP0PI3eS+xB9Sy9fEtxlH2PMGdwiJ9Opgf+a/8NzzJPuEJ+hLQ26w4qb/VwKU/OQuAWw==
   </data>
  </layer>
- <layer name="collisions" width="16" height="14">
+ <layer name="collision" width="16" height="14" visible="0">
   <data encoding="base64" compression="zlib">
    eJw7ycDAcHIQYFLBqP5R/dTUP1AYAJUxUak=
   </data>

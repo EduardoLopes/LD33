@@ -26,7 +26,7 @@ class Main extends luxe.Game {
                 { id:'assets/fonts/SEN.fnt' },
             ],
             texts:[
-                { id: 'assets/maps/map-0.tmx' }
+                { id: 'assets/map-0.tmx' }
             ],
             textures : [
                 { id:'assets/tiles.png'}

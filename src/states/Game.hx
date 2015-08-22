@@ -5,15 +5,28 @@ import luxe.Input;
 import luxe.Vector;
 import luxe.Color;
 import luxe.Sprite;
-
 import luxe.Input;
 import luxe.tilemaps.Tilemap;
 import luxe.importers.tiled.TiledMap;
 
+import nape.phys.Body;
+import nape.phys.BodyType;
+import nape.callbacks.CbType;
+import nape.shape.Polygon;
+
+#if !no_debug_console
+import luxe.physics.nape.DebugDraw;
+#end
+
 class Game extends State {
 
     var tilemap : TiledMap;
+    var tilemapBody : Body;
+    var tilemapType : CbType;
     var scale : Int = 1;
+    #if !no_debug_console
+    public static var drawer : DebugDraw;
+    #end
 
     public function new() {
 
@@ -25,14 +38,55 @@ class Game extends State {
 
         Luxe.renderer.clear_color = new Color().rgb(0x21313e);
 
-        var res = Luxe.resources.text('assets/maps/map-0.tmx');
-        tilemap = new TiledMap({ tiled_file_data:res.asset.text, pos : new Vector(0,0) });
+        #if !no_debug_console
+            drawer = new DebugDraw({
+                depth: 100
+            });
+            Luxe.physics.nape.debugdraw = drawer;
+        #end
+
+        tilemapType = new CbType();
+        tilemapBody = new Body(BodyType.STATIC);
+        tilemapBody.cbTypes.add(tilemapType);
+
+        var res = Luxe.resources.text('assets/map-0.tmx');
+        tilemap = new TiledMap({
+            tiled_file_data : res.asset.text,
+            pos : new Vector(0,0)
+        });
+
         tilemap.display({ visible: true, scale:1, grid:false, depth: 1 });
+
+        var bounds = tilemap.layer('collision').bounds_fitted();
+        for(bound in bounds) {
+            bound.x *= tilemap.tile_width * scale;
+            bound.y *= tilemap.tile_height * scale;
+            bound.w *= tilemap.tile_width * scale;
+            bound.h *= tilemap.tile_height * scale;
+            tilemapBody.shapes.add(
+                new Polygon(
+                    Polygon.rect(bound.x, bound.y, bound.w, bound.h)
+                )
+            );
+        }
+
+        tilemapBody.space = Luxe.physics.nape.space;
+
+        #if !no_debug_console
+            Game.drawer.add(tilemapBody);
+            Luxe.physics.nape.draw = false;
+        #end
 
         connect_input();
 
     } //onenter
 
+    override function onkeyup(e:KeyEvent) {
+        if(e.keycode == Key.key_0) {
+            Luxe.physics.nape.draw = !Luxe.physics.nape.draw;
+            trace(Luxe.physics.nape.draw);
+        }
+    }
 
     function connect_input() {
 
@@ -52,8 +106,6 @@ class Game extends State {
         Luxe.input.bind_key('action', Key.space);
 
     } //connect_input
-
-
 
     override function onleave<T>(_:T) {
 
