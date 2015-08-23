@@ -21,6 +21,7 @@ class Main extends luxe.Game {
 
         config.window.width = config.window.width * ZOOM;
         config.window.height = config.window.height * ZOOM;
+        config.web.prevent_default_keys = [Key.space];
 
         return config;
 
