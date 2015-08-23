@@ -126,12 +126,14 @@ class People extends Sprite {
             body.velocity.y = Math.sin(a) * 60;
         }
 
-        if(body.velocity.x < 0){
+        if(dist < 58){
+            if(body.velocity.x < 1){
             moving = true;
             flipx = true;
-        } else if(body.velocity.x > 0){
-            moving = true;
-            flipx = false;
+            } else if(body.velocity.x > 1){
+                moving = true;
+                flipx = false;
+            }
         }
 
         if(moving) {
