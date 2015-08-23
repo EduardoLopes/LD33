@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="16" tileheight="16" nextobjectid="6">
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="400">
+  <image source="tiles.png" width="320" height="320"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJyNk8sRgzAMRJWQTwWB5MYVU0NmaCEduBSV4lIoxaVkhaRgGE+Sww6yrbeSP7RE84GIa2qI6GRqKustUcS3P2L9VlEH3U2IuVwDk8Bm4TGOT8y9MPePnuq14TFPA2IojZB8A8bjdsyj1plrfLBcqA8rQxhzUO/FT/gH5q+IofhQT6kvDLnHUHgUXsKzMGfEl4Lf1e+L/iVm93EebDpvebY6aVjrZ+tFPJYaX/rPnuO89bT04WciPO4zN6rY2fmNyvaW73fBPmd74C/nL+sprHthZ4q4en94E9NLfX4Kubnk8RbjTT0/wp4mvNvZ1e3Wj/rf5FZ9pr1wLhP+m9nVaP4mByy9AQ5PeSg=
+  </data>
+ </layer>
+ <layer name="collision" width="16" height="14" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJw7ycDAcHIQYFLBQOtHNoNcMJT1D3T4U1v/QGEAwO1LYQ==
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="1" name="player" type="Player" x="112" y="96" width="16" height="32"/>
+  <object id="2" type="PeopleSpawn" x="224" y="80" width="16" height="32">
+   <properties>
+    <property name="spawto" value="left"/>
+   </properties>
+  </object>
+  <object id="4" type="PeopleSpawn" x="16" y="96" width="16" height="32">
+   <properties>
+    <property name="spawto" value="right"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
