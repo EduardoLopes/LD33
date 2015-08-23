@@ -47,6 +47,13 @@ class Player extends Sprite {
         body = new Body(BodyType.DYNAMIC);
         body.allowRotation = false;
 
+        Luxe.physics.nape.space.listeners.add(new InteractionListener(
+            CbEvent.BEGIN, InteractionType.COLLISION,
+            type,
+            Game.peopleType,
+            collidewithpeople
+        ));
+
         var core = new Polygon( Polygon.rect(0, 8, 16, 16) );
 
         core.cbTypes.add(type);
@@ -67,6 +74,22 @@ class Player extends Sprite {
         Game.drawer.add(body);
         #end
     }
+
+    function collidewithpeople(cb:InteractionCallback) {
+
+        //heart
+
+        Main.state.set('game');
+
+        visible = false;
+        body.space = null;
+        #if !no_debug_console
+        Game.drawer.remove(body);
+        #end
+        Luxe.audio.play("hurt");
+
+    }
+
 
     override function update(dt:Float) {
 

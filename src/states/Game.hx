@@ -31,6 +31,7 @@ class Game extends State {
     var tilemapBody : Body;
     public static var tilemapType : CbType;
     public static var heartType : CbType;
+    public static var peopleType : CbType;
     var scale : Int = 1;
     var entities:Array<Entity>;
 
@@ -54,6 +55,7 @@ class Game extends State {
         entities = [];
 
         heartType = new CbType();
+        peopleType = new CbType();
 
         tilemapType = new CbType();
         tilemapBody = new Body(BodyType.STATIC);
@@ -128,6 +130,21 @@ class Game extends State {
     } //connect_input
 
     override function onleave<T>(_:T) {
+
+        Luxe.physics.nape.space.clear();
+        tilemapBody = null;
+
+        for( entity in entities ){
+            if(entity != null){
+                Luxe.scene.remove( entity );
+                entity.destroy();
+                entity = null;
+            }
+        }
+
+        tilemap.visual.destroy();
+        tilemap = null;
+        Luxe.renderer.batcher.empty();
 
     } //onleave
 

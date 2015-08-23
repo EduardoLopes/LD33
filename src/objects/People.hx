@@ -50,6 +50,7 @@ class People extends Sprite {
         var core = new Polygon( Polygon.rect(0, 8, 16, 16) );
 
         core.cbTypes.add(type);
+        core.cbTypes.add(Game.peopleType);
         core.filter.collisionGroup = 4;
 
         body.shapes.add( core );
