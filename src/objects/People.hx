@@ -103,6 +103,7 @@ class People extends Sprite {
         Game.drawer.remove(body);
         #end
         PeopleSpawn.countPeople--;
+        Luxe.audio.play("hurt");
         destroy();
 
     }

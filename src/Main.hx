@@ -38,6 +38,18 @@ class Main extends luxe.Game {
                 { id:'assets/tiles.png'},
                 { id:'assets/images/player.png'},
                 { id:'assets/images/heart.png'}
+            ],
+            sounds : [
+                {
+                    id : 'assets/sounds/shot.ogg',
+                    name : 'shot',
+                    is_stream : false
+                },
+                {
+                    id : 'assets/sounds/hurt.ogg',
+                    name : 'hurt',
+                    is_stream : false
+                }
             ]
         });
 

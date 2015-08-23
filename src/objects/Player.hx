@@ -106,6 +106,7 @@ class Player extends Sprite {
             new Heart(pos.x, pos.y, facing);
             shotTime = 0;
             Luxe.camera.shake(1.5);
+            Luxe.audio.play("shot");
 
             if(facing == 'left') {
                 body.velocity.x = 50;
