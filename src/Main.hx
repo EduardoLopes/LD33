@@ -3,6 +3,7 @@ import luxe.Input;
 import luxe.Parcel;
 import luxe.ParcelProgress;
 import luxe.States;
+import luxe.Vector;
 import luxe.Color;
 import phoenix.Texture;
 import phoenix.Camera;
@@ -14,8 +15,12 @@ import states.Game;
 class Main extends luxe.Game {
 
     public static var state: States;
+    var ZOOM:Int = 2;
 
     override function config(config:luxe.AppConfig) {
+
+        config.window.width = config.window.width * ZOOM;
+        config.window.height = config.window.height * ZOOM;
 
         return config;
 
@@ -69,6 +74,9 @@ class Main extends luxe.Game {
     } //ready
 
     function onLoaded(_){
+
+        Luxe.camera.zoom = ZOOM;
+        Luxe.camera.pos.set_xy(-(256 / 2), -(224 / 2));
 
         Luxe.physics.nape.space.gravity = new Vec2(0, 0);
 

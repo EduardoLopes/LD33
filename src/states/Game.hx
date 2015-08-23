@@ -72,10 +72,10 @@ class Game extends State {
 
         scoreText = new Text({
             text: '0',
-            pos : new Vector(Luxe.screen.mid.x - 8, 0).int(),
+            pos : new Vector((Luxe.screen.mid.x / 2) - 8, 0).int(),
             point_size : 24,
             color: new Color().rgb(0x000000),
-            font: Luxe.resources.font('assets/SEN.fnt'),
+            font: Luxe.resources.font('assets/fonts/SEN.fnt'),
             depth: 4
         });
 
