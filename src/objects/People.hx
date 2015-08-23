@@ -84,6 +84,13 @@ class People extends Sprite {
         return Math.sqrt(Math.pow( a.x - b.x, 2) + Math.pow( a.y - b.y, 2));
     };
 
+    function angle(a:Vector, b:Vector) {
+        var dx:Float = (b.x) - (a.x);
+        var dy:Float = (b.y) - (a.y);
+
+        return Math.atan2(dy, dx);
+    };
+
 
 
     function bulletCollides(cb:InteractionCallback) {
@@ -107,6 +114,25 @@ class People extends Sprite {
         super.update(dt);
 
         moving = false;
+
+        var dist:Float = distance( pos, Player.position );
+        if(dist > 60){
+            var a:Float = angle( pos, Player.position );
+            body.velocity.x = Math.cos(a) * 60;
+            body.velocity.y = Math.sin(a) * 60;
+        } else {
+            var a:Float = angle( Player.position, pos );
+            body.velocity.x = Math.cos(a) * 60;
+            body.velocity.y = Math.sin(a) * 60;
+        }
+
+        if(body.velocity.x < 0){
+            moving = true;
+            flipx = true;
+        } else if(body.velocity.x > 0){
+            moving = true;
+            flipx = false;
+        }
 
         if(moving) {
 
