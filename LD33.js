@@ -444,6 +444,7 @@ Main.prototype = $extend(luxe_Game.prototype,{
 	config: function(config) {
 		config.window.width = config.window.width * this.ZOOM;
 		config.window.height = config.window.height * this.ZOOM;
+		config.web.prevent_default_keys = [snow_system_input_Keycodes.space];
 		return config;
 	}
 	,ready: function() {
