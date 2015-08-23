@@ -53,6 +53,7 @@ class Heart extends Sprite {
         core.filter.collisionGroup = 2;
         core.filter.collisionMask = ~(1|2);
         core.cbTypes.add(type);
+        core.cbTypes.add(Game.heartType);
 
         body.shapes.add( core );
 
@@ -82,21 +83,34 @@ class Heart extends Sprite {
         anim.animation = 'idle';
         anim.play();
 
+        core.userData.collide = collide;
+
         body.space = Luxe.physics.nape.space;
         #if !no_debug_console
         Game.drawer.add(body);
         #end
     }
 
-    function bulletCollides(cb:InteractionCallback) {
-
+    public function collide(){
         anim.animation = 'collide';
         anim.play();
-
+        body.space = null;
+        direction = 'none';
+        body.velocity.x = 0;
         #if !no_debug_console
         Game.drawer.remove(body);
         #end
+    }
 
+    function bulletCollides(cb:InteractionCallback) {
+
+        collide();
+
+    }
+
+    function kill(){
+        destroy();
+        visible = false;
     }
 
     override function update(dt:Float) {
@@ -104,22 +118,20 @@ class Heart extends Sprite {
         super.update(dt);
 
         if(!anim.playing && anim.animation == 'collide'){
-            body.space = null;
-            destroy();
-            visible = false;
+            kill();
         }
 
-        /*body.velocity.x *= 0.8;
-        body.velocity.y *= 0.8;*/
-        if(direction == 'left'){
-            body.velocity.x -= 20;
-        } else if(direction == 'right'){
-            body.velocity.x += 20;
+        if(body != null){
+            if(direction == 'left'){
+                body.velocity.x -= 20;
+            } else if(direction == 'right'){
+                body.velocity.x += 20;
+            }
+
+            pos.x = body.position.x;
+            pos.y = body.position.y;
+
         }
-
-
-        pos.x = body.position.x;
-        pos.y = body.position.y;
 
         pos = pos.int();
 

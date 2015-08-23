@@ -20,6 +20,7 @@ import luxe.physics.nape.DebugDraw;
 #end
 
 import objects.Player;
+import objects.PeopleSpawn;
 
 class Game extends State {
 
@@ -29,6 +30,7 @@ class Game extends State {
     var tilemap : TiledMap;
     var tilemapBody : Body;
     public static var tilemapType : CbType;
+    public static var heartType : CbType;
     var scale : Int = 1;
     var entities:Array<Entity>;
 
@@ -50,6 +52,8 @@ class Game extends State {
         #end
 
         entities = [];
+
+        heartType = new CbType();
 
         tilemapType = new CbType();
         tilemapBody = new Body(BodyType.STATIC);

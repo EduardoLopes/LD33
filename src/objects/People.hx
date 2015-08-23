@@ -20,25 +20,25 @@ import states.Game;
 import objects.Heart;
 
 
-class Player extends Sprite {
+class People extends Sprite {
 
     public var body : Body;
-    public static var type : CbType = new CbType();
+    var type : CbType = new CbType();
     public var facing : String;
     public var anim : SpriteAnimation;
     var speed : Int = 100;
     var moving : Bool = false;
     var shotTime : Int = 0;
-    public static var position = new Vector(0,0);
 
-    public function new (object:TiledObject){
+    public function new (X:Float, Y:Float, Direction:String){
 
         super({
             size: new Vector(16, 24),
-            pos: new Vector(object.pos.x, object.pos.y),
+            pos: new Vector(X, Y),
             texture: Luxe.resources.texture('assets/images/player.png'),
-            name: object.name,
-            depth: 2,
+            name: 'people',
+            name_unique: true,
+            depth: 3,
             centered: false
         });
 
@@ -50,11 +50,23 @@ class Player extends Sprite {
         var core = new Polygon( Polygon.rect(0, 8, 16, 16) );
 
         core.cbTypes.add(type);
-        core.filter.collisionGroup = 1;
-        core.filter.collisionMask = ~2;
+        core.filter.collisionGroup = 4;
 
         body.shapes.add( core );
         body.position.setxy(pos.x, pos.y);
+
+        Luxe.physics.nape.space.listeners.add(new InteractionListener(
+            CbEvent.BEGIN, InteractionType.COLLISION,
+            type,
+            Game.heartType,
+            bulletCollides
+        ));
+
+        if(Direction == 'left'){
+            body.velocity.x = -100;
+        } else if(Direction == 'right'){
+            body.velocity.x += -100;
+        }
 
         var anim_object = Luxe.resources.json('assets/jsons/player_animation.json');
         anim = add( new SpriteAnimation({ name:'anim' }) );
@@ -68,52 +80,33 @@ class Player extends Sprite {
         #end
     }
 
+    function distance(a:Vector, b:Vector) {
+        return Math.sqrt(Math.pow( a.x - b.x, 2) + Math.pow( a.y - b.y, 2));
+    };
+
+
+
+    function bulletCollides(cb:InteractionCallback) {
+
+        //heart
+        cb.int2.userData.collide();
+        visible = false;
+        body.space = null;
+        #if !no_debug_console
+        Game.drawer.remove(body);
+        #end
+        PeopleSpawn.countPeople--;
+        destroy();
+
+    }
+
+
+
     override function update(dt:Float) {
 
         super.update(dt);
 
         moving = false;
-
-        if(Luxe.input.inputdown('left')) {
-            body.velocity.x = -speed;
-            moving = true;
-            if(!Luxe.input.inputdown('action')){
-                flipx = true;
-                facing = 'left';
-            }
-
-        } else if(Luxe.input.inputdown('right')) {
-            body.velocity.x = speed;
-            moving = true;
-            if(!Luxe.input.inputdown('action')){
-                flipx = false;
-                facing = 'right';
-            }
-
-        }
-
-        if(Luxe.input.inputdown('up')) {
-            body.velocity.y = -speed;
-            moving = true;
-        } else if(Luxe.input.inputdown('down')) {
-            body.velocity.y = speed;
-            moving = true;
-        }
-
-        if(Luxe.input.inputdown('action') && shotTime > 20) {
-
-            //would be nice have a pool of hearts?
-            new Heart(pos.x, pos.y, facing);
-            shotTime = 0;
-            Luxe.camera.shake(1.5);
-
-            if(facing == 'left') {
-                body.velocity.x = 50;
-            } else if(facing == 'right') {
-                body.velocity.x = -50;
-            }
-
-        }
 
         if(moving) {
 
@@ -146,9 +139,6 @@ class Player extends Sprite {
         pos.y = body.position.y;
 
         pos = pos.int();
-
-        position.x = pos.x;
-        position.y = pos.y;
 
     }
 
