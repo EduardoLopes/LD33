@@ -5,6 +5,7 @@ import luxe.Input;
 import luxe.Vector;
 import luxe.Color;
 import luxe.Sprite;
+import luxe.Text;
 import luxe.Input;
 import luxe.Entity;
 import luxe.tilemaps.Tilemap;
@@ -34,6 +35,8 @@ class Game extends State {
     public static var peopleType : CbType;
     var scale : Int = 1;
     var entities:Array<Entity>;
+    public static var score:Int = 0;
+    public static var scoreText:Text;
 
     public function new() {
 
@@ -65,6 +68,15 @@ class Game extends State {
         tilemap = new TiledMap({
             tiled_file_data : res.asset.text,
             pos : new Vector(0,0)
+        });
+
+        scoreText = new Text({
+            text: '0',
+            pos : new Vector(Luxe.screen.mid.x - 8, 0).int(),
+            point_size : 24,
+            color: new Color().rgb(0x000000),
+            font: Luxe.resources.font('assets/SEN.fnt'),
+            depth: 4
         });
 
         tilemap.display({ visible: true, scale:1, grid:false, depth: 1 });
@@ -131,6 +143,9 @@ class Game extends State {
 
     override function onleave<T>(_:T) {
 
+        score = 0;
+        scoreText.text = Std.string(Game.score);
+
         Luxe.physics.nape.space.clear();
         tilemapBody = null;
 
@@ -142,8 +157,13 @@ class Game extends State {
             }
         }
 
+        Luxe.scene.remove( scoreText );
+        scoreText.destroy();
+        scoreText = null;
+
         tilemap.visual.destroy();
         tilemap = null;
+
         Luxe.renderer.batcher.empty();
 
     } //onleave

@@ -10,7 +10,6 @@ class PeopleSpawn extends Entity{
   var spawTime = 80;
   var spawTimer = 80;
   var direction : String;
-  var entities : Array<Entity>;
 
   public function new(object:TiledObject){
 
@@ -18,26 +17,20 @@ class PeopleSpawn extends Entity{
       pos: new Vector(object.pos.x, object.pos.y)
     });
 
-    entities = [];
-
     direction = object.properties['spawto'];
 
   }
 
   override function ondestroy(){
-    for( entity in entities ){
-      if(entity != null){
-        Luxe.scene.remove( entity );
-        entity.destroy();
-        entity = null;
-      }
-    }
+
+    countPeople = 0;
+
   }
 
   override function update(dt:Float){
 
     if(spawTimer < 0 && countPeople < 10){
-      entities.push(new People(pos.x, pos.y, direction));
+      new People(pos.x, pos.y, direction);
       spawTimer = spawTime;
       countPeople++;
     }

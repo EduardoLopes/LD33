@@ -35,7 +35,7 @@ class People extends Sprite {
         super({
             size: new Vector(16, 24),
             pos: new Vector(X, Y),
-            texture: Luxe.resources.texture('assets/images/player.png'),
+            texture: Luxe.resources.texture('assets/images/people.png'),
             name: 'people',
             name_unique: true,
             depth: 3,
@@ -95,6 +95,8 @@ class People extends Sprite {
 
 
     function bulletCollides(cb:InteractionCallback) {
+        Game.score++;
+        Game.scoreText.text = Std.string(Game.score);
 
         //heart
         cb.int2.userData.collide();

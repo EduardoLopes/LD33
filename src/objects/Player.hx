@@ -79,14 +79,16 @@ class Player extends Sprite {
 
         //heart
 
-        Main.state.set('game');
+        //Main.state.set('game');
 
-        visible = false;
+        Game.score = 0;
+        Game.scoreText.text = Std.string(Game.score);
+
+/*        visible = false;
         body.space = null;
         #if !no_debug_console
         Game.drawer.remove(body);
-        #end
-        Luxe.audio.play("hurt");
+        #end*/
 
     }
 

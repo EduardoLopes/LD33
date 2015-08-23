@@ -37,7 +37,8 @@ class Main extends luxe.Game {
             textures : [
                 { id:'assets/tiles.png'},
                 { id:'assets/images/player.png'},
-                { id:'assets/images/heart.png'}
+                { id:'assets/images/heart.png'},
+                { id:'assets/images/people.png'}
             ],
             sounds : [
                 {
