@@ -32,7 +32,7 @@ class Heart extends Sprite {
     public function new (x:Float, y:Float, Direction:String){
 
         super({
-            size: new Vector(12, 15),
+            size: new Vector(14, 17),
             pos: new Vector(x, y),
             texture: Luxe.resources.texture('assets/images/heart.png'),
             name: 'heart',
@@ -49,7 +49,7 @@ class Heart extends Sprite {
         body.allowRotation = false;
         body.isBullet = true;
 
-        var core = new Polygon( Polygon.rect(0, 0, 12, 15) );
+        var core = new Polygon( Polygon.rect(0, 1, 14, 15) );
         core.filter.collisionGroup = 2;
         core.filter.collisionMask = ~(1|2);
         core.cbTypes.add(type);
@@ -58,12 +58,15 @@ class Heart extends Sprite {
 
         if(direction == 'left'){
             flipx = false;
-            body.position.setxy(pos.x, pos.y + 9);
+            pos.y += 8;
+            body.position.setxy(pos.x, pos.y);
         }
 
         if(direction == 'right'){
             flipx = true;
-            body.position.setxy(pos.x - 4, pos.y + 9);
+            pos.x += 4;
+            pos.y += 8;
+            body.position.setxy(pos.x, pos.y);
         }
 
         Luxe.physics.nape.space.listeners.add(new InteractionListener(
@@ -119,6 +122,7 @@ class Heart extends Sprite {
         pos.y = body.position.y;
 
         pos = pos.int();
+
 
     }
 

@@ -37,7 +37,7 @@ class Player extends Sprite {
             pos: new Vector(object.pos.x, object.pos.y),
             texture: Luxe.resources.texture('assets/images/player.png'),
             name: object.name,
-            depth: 3,
+            depth: 2,
             centered: false
         });
 
@@ -85,8 +85,8 @@ class Player extends Sprite {
             body.velocity.x = speed;
             moving = true;
             if(!Luxe.input.inputdown('action')){
-            flipx = false;
-            facing = 'right';
+                flipx = false;
+                facing = 'right';
             }
 
         }
@@ -103,6 +103,13 @@ class Player extends Sprite {
 
             new Heart(pos.x, pos.y, facing);
             shotTime = 0;
+            Luxe.camera.shake(1.5);
+
+            if(facing == 'left') {
+                body.velocity.x = 50;
+            } else if(facing == 'right') {
+                body.velocity.x = -50;
+            }
 
         }
 

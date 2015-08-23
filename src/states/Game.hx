@@ -129,7 +129,7 @@ class Game extends State {
 
     override function update( dt:Float ) {
 
-        Luxe.camera.pos = Luxe.camera.pos.int();
+
 
     } //update
 
